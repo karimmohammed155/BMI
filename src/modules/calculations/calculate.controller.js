@@ -39,7 +39,7 @@ export const calculate_bmi_user = async (req, res, next) => {
 
 export const bmi_history = async (req, res, next) => {
   const { user_id } = req.authUser;
-  const all_history = await calculations.find({ _id: user_id });
+  const all_history = await calculations.find({ user_id: user_id });
   if (!all_history) {
     return next(
       new Error_handler_class("no data is found", 400, "bmi_history api")
