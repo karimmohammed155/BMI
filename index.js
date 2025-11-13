@@ -3,6 +3,7 @@ import db_connection from "./DB/connection.js";
 import { config } from "dotenv";
 import { global_response } from "./src/middlewares/error.handle.middleware.js";
 import user_router from "./src/modules/user/user.route.js";
+import calculate_router from "./src/modules/calculations/calculate.route.js";
 
 config();
 const app = express();
@@ -11,6 +12,7 @@ db_connection();
 
 app.use(express.json());
 app.use("/user", user_router);
+app.use("/bmi", calculate_router);
 app.use(global_response);
 
 app.get("/", (req, res) => res.send("Hello World!"));
