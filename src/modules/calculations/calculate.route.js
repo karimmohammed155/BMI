@@ -18,5 +18,10 @@ calculate_router.get(
   auth(),
   error_handle(calculate_controller.bmi_history)
 );
+calculate_router.delete(
+  "/delete",
+  auth(),
+  error_handle(calculate_controller.delete_bmi)
+);
 
 export default calculate_router;
