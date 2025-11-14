@@ -12,10 +12,14 @@ const calculate_schema = new Schema(
       required: true,
     },
     Result: Number,
-    user_id:{
-      type:Schema.Types.ObjectId,
-      ref:"user"
-    }
+    user_id: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+    category: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true, versionKey: false }
 );

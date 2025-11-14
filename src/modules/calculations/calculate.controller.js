@@ -13,7 +13,14 @@ export const calculate_bmi_guest = async (req, res, next) => {
     );
   }
   const bmi = weight / ((height / 100) * (height / 100));
-  res.status(200).json({ message: "success", Data: bmi });
+  let category = "";
+  if (bmi < 18.5) category = "Underweight";
+  else if (bmi < 25) category = "Normal Weight";
+  else if (bmi < 30) category = "Overweight";
+  else category = "Obese";
+  res
+    .status(200)
+    .json({ message: "success", Result: bmi.toFixed(2), category: category });
 };
 export const calculate_bmi_user = async (req, res, next) => {
   const { weight, height } = req.body;
@@ -28,13 +35,25 @@ export const calculate_bmi_user = async (req, res, next) => {
   }
   const { user_id } = req.authUser;
   const bmi = weight / ((height / 100) * (height / 100));
+  let category = "";
+  if (bmi < 18.5) category = "Underweight";
+  else if (bmi < 25) category = "Normal Weight";
+  else if (bmi < 30) category = "Overweight";
+  else category = "Obese";
   const new_bmi = await calculations.create({
     weight,
     height,
     Result: bmi,
+    category: category,
     user_id: user_id,
   });
-  res.status(200).json({ message: "success", Data: new_bmi });
+  res
+    .status(200)
+    .json({
+      message: "success",
+      Result: new_bmi.Result.toFixed(2),
+      category: new_bmi.category,
+    });
 };
 
 export const bmi_history = async (req, res, next) => {
