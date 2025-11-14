@@ -47,13 +47,11 @@ export const calculate_bmi_user = async (req, res, next) => {
     category: category,
     user_id: user_id,
   });
-  res
-    .status(200)
-    .json({
-      message: "success",
-      Result: new_bmi.Result.toFixed(2),
-      category: new_bmi.category,
-    });
+  res.status(200).json({
+    message: "success",
+    Result: new_bmi.Result.toFixed(2),
+    category: new_bmi.category,
+  });
 };
 
 export const bmi_history = async (req, res, next) => {
@@ -65,4 +63,18 @@ export const bmi_history = async (req, res, next) => {
     );
   }
   res.status(200).json({ message: "All Bmi found", Data: all_history });
+};
+export const delete_bmi = async (req, res, next) => {
+  const { _id } = req.params;
+  const { user_id } = req.authUser;
+  const bmi_exists = await calculations.findOneAndDelete({
+    _id: _id,
+    user_id: user_id,
+  });
+  if (!bmi_exists) {
+    return next(
+      new Error_handler_class("no data is found", 400, "delete_bmi api")
+    );
+  }
+  res.status(200).json({ message: "Bmi deleted successfully" });
 };
