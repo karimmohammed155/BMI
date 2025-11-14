@@ -102,7 +102,7 @@ Requires JWT token. Saves BMI result in MongoDB.
 
 #### Headers
 
-    token: Bearer <token>
+    Authorization: Bearer <token>
 
 #### Request Body
 
@@ -134,7 +134,7 @@ Fetch all saved BMI records for logged-in user.
 
 #### Headers
 
-    token: Bearer <token>
+    Authorization: Bearer <token>
 
 #### Response
 
@@ -161,7 +161,7 @@ Deletes a specific BMI record for the authenticated user.
 
 #### Headers
 
-    token: Bearer <token>
+    Authorization: Bearer <token>
 
 #### Response
 
