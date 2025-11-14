@@ -19,7 +19,7 @@ calculate_router.get(
   error_handle(calculate_controller.bmi_history)
 );
 calculate_router.delete(
-  "/delete",
+  "/delete/:user_id",
   auth(),
   error_handle(calculate_controller.delete_bmi)
 );

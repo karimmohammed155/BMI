@@ -33,7 +33,7 @@ export const calculate_bmi_user = async (req, res, next) => {
       )
     );
   }
-  const { user_id } = req.authUser;
+  const { _id } = req.authUser;
   const bmi = weight / ((height / 100) * (height / 100));
   let category = "";
   if (bmi < 18.5) category = "Underweight";
@@ -45,7 +45,7 @@ export const calculate_bmi_user = async (req, res, next) => {
     height,
     Result: bmi,
     category: category,
-    user_id: user_id,
+    user_id: _id,
   });
   res.status(200).json({
     message: "success",
@@ -55,8 +55,8 @@ export const calculate_bmi_user = async (req, res, next) => {
 };
 
 export const bmi_history = async (req, res, next) => {
-  const { user_id } = req.authUser;
-  const all_history = await calculations.find({ user_id: user_id });
+  const { _id } = req.authUser;
+  const all_history = await calculations.find({ user_id: _id });
   if (!all_history) {
     return next(
       new Error_handler_class("no data is found", 400, "bmi_history api")
@@ -65,11 +65,11 @@ export const bmi_history = async (req, res, next) => {
   res.status(200).json({ message: "All Bmi found", Data: all_history });
 };
 export const delete_bmi = async (req, res, next) => {
-  const { _id } = req.params;
-  const { user_id } = req.authUser;
+  const { user_id } = req.params;
+  const { _id } = req.authUser;
   const bmi_exists = await calculations.findOneAndDelete({
-    _id: _id,
-    user_id: user_id,
+    _id: user_id,
+    user_id: _id,
   });
   if (!bmi_exists) {
     return next(
